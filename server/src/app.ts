@@ -1,3 +1,4 @@
+import { IPostsRouter } from "./posts/posts.router";
 import express, { Express } from "express";
 import { Server } from "http";
 import { inject, injectable } from "inversify";
@@ -21,6 +22,7 @@ export class App implements IApp {
 
   @inject(TYPES.PrismaService) private prismaService: IPrismaService;
   @inject(TYPES.UsersAuthRouter) private usersAuthRouter: IUsersAuthRouter;
+  @inject(TYPES.PostsRouter) private postsRouter: IPostsRouter;
 
   constructor() {
     dotenv.config();
@@ -30,6 +32,7 @@ export class App implements IApp {
 
   private useRoutes() {
     this.app.use("/api/users", this.usersAuthRouter.router);
+    this.app.use("/api/posts", this.postsRouter.router);
   }
 
   public async init() {

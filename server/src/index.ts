@@ -6,6 +6,7 @@ import { TYPES } from "./shared/constants";
 
 import { IPrismaService, PrismaService } from "./database/prisma.service";
 import { usersContainer } from "./users/users-ioc.container";
+import { postsContainer } from "./posts/posts-ioc.conainer";
 
 function bootstrap() {
   const container = new Container();
@@ -15,6 +16,7 @@ function bootstrap() {
     .to(PrismaService)
     .inSingletonScope();
   container.load(usersContainer);
+  container.load(postsContainer);
   const app = container.get<IApp>(TYPES.App);
   app.init();
   return { container, app };

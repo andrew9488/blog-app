@@ -5,4 +5,7 @@ export enum TYPES {
   UsersAuthController = "UsersAuthController",
   UsersRepository = "UsersRepository",
   UsersAuthMiddleware = "UsersAuthMiddleware",
+  PostsRepository = "PostsRepository",
+  PostsRouter = "PostsRouter",
+  PostsController = "PostsController",
 }
