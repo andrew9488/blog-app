@@ -78,7 +78,7 @@ export class UsersAuthController implements IUsersAuthController {
         return;
       }
       const token = this.createToken(user.id);
-      res.status(201).json({ token, user });
+      res.status(200).json({ token, user });
     } catch (error) {
       this.httpError(res, error);
     }

@@ -3,9 +3,10 @@ enum APP_ROUTES {
   login = "/login",
   register = "/register",
   posts = "/posts",
+  myPosts = "/my-posts",
   post = "/posts/:id",
   createPost = "posts/create-post",
-  editPost = "/posts/:id/edit-post",
+  editPost = "/posts/edit-post/:id",
 }
 
 export default APP_ROUTES;

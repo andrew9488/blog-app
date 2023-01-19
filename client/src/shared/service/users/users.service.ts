@@ -1,9 +1,12 @@
 import axiosApiInstance from "../api";
 import { AuthFormDataType } from "../../helpers";
+import { UserType } from "./../../helpers/types";
 
 const usersApi = {
   login(data: AuthFormDataType) {
-    return axiosApiInstance.post("/users/login", data).then((res) => res.data);
+    return axiosApiInstance
+      .post<{ user: UserType; token: string }>("/users/login", data)
+      .then((res) => res.data);
   },
   register(data: AuthFormDataType) {
     return axiosApiInstance
@@ -11,7 +14,9 @@ const usersApi = {
       .then((res) => res.data);
   },
   authMe() {
-    return axiosApiInstance.get("/users/me").then((res) => res.data);
+    return axiosApiInstance
+      .get<{ user: UserType; token: string }>("/users/me")
+      .then((res) => res.data);
   },
 };
 

@@ -12,7 +12,7 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ token, children }) => {
   return (
     <>
-      {token ? <Layout>{children}</Layout> : <Navigate to={APP_ROUTES.login} />}
+      {token ? <Layout token={token}>{children}</Layout> : <Navigate to={APP_ROUTES.login} />}
     </>
   );
 };

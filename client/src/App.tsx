@@ -1,29 +1,28 @@
-import { useEffect } from "react";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 
-import { APP_ROUTES, usersService } from "./shared";
 import { PrivateRoute } from "./components";
+import { CreatePostPage } from "./pages/create-post";
 import { HomePage } from "./pages/home";
 import { LoginPage } from "./pages/login";
-import { PostsPage } from "./pages/posts";
+import { PostPage } from "./pages/post";
+import { MyPostsPage } from "./pages/my-posts";
 import { RegisterPage } from "./pages/register";
-import { CreatePostPage } from "./pages/create-post";
+import { APP_ROUTES, usersService } from "./shared";
 
 const App = () => {
-  const { data, isLoading } = useQuery(["authMe"], usersService.authMe, {
-    retry: false,
-  });
-  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    if (data?.token) {
-      navigate(APP_ROUTES.home);
-    }
-  }, [data?.token]);
+  const { data, isLoading } = useQuery(["authMe"], usersService.authMe, {
+    enabled:
+      location.pathname !== APP_ROUTES.login &&
+      location.pathname !== APP_ROUTES.register,
+  });
 
   if (isLoading) {
-    return <div>loading</div>;
+    return (
+      <div className="text-xl text-center text-white py-10">Loading...</div>
+    );
   }
 
   return (
@@ -35,13 +34,20 @@ const App = () => {
         <Route
           path={`${APP_ROUTES.home}*`}
           element={
-            <PrivateRoute token={data?.token}>
+            <PrivateRoute token={data?.token as string}>
               <Routes>
                 <Route path={`${APP_ROUTES.home}/*`} element={<HomePage />} />
-                <Route path={`${APP_ROUTES.posts}/*`} element={<PostsPage />} />
+                <Route
+                  path={`${APP_ROUTES.myPosts}/*`}
+                  element={<MyPostsPage />}
+                />
                 <Route
                   path={`${APP_ROUTES.createPost}/*`}
                   element={<CreatePostPage />}
+                />
+                <Route
+                  path={`${APP_ROUTES.post}/*`}
+                  element={<PostPage userId={data?.user.id as number} />}
                 />
               </Routes>
             </PrivateRoute>

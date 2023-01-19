@@ -38,8 +38,16 @@ export class UsersRepository implements IUsersRepository {
         posts: {
           upsert: [
             {
-              create: { title: post.title, content: post.content },
-              update: { title: post.title, content: post.content },
+              create: {
+                title: post.title,
+                content: post.content,
+                createdAt: post.createdAt,
+              },
+              update: {
+                title: post.title,
+                content: post.content,
+                createdAt: post.createdAt,
+              },
               where: { id: post.id },
             },
           ],

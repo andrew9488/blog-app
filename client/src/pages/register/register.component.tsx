@@ -12,7 +12,7 @@ const RegisterPage = () => {
   const onSubmit = handleSubmit((value: AuthFormDataType) => {
     try {
       registration.mutate({ ...value });
-      navigate(APP_ROUTES.home);
+      navigate(APP_ROUTES.login);
     } catch (error) {
       console.log(error);
     }

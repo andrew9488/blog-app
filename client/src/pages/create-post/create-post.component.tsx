@@ -2,16 +2,17 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { PostFromField } from "./constants";
-import { APP_ROUTES, CreatePostFormDataType } from "../../shared";
+import { APP_ROUTES, CreatePostFormDataType, usePosts } from "../../shared";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, resetField } =
     useForm<CreatePostFormDataType>();
+  const { createPost } = usePosts();
 
   const onSubmit = handleSubmit((value) => {
     try {
-      console.log(value);
+      createPost.mutate(value);
       navigate(APP_ROUTES.home);
     } catch (error) {
       console.log(error);
