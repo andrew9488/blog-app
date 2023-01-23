@@ -1,19 +1,53 @@
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 import { PostFromField } from "./constants";
-import { APP_ROUTES, CreatePostFormDataType, usePosts } from "../../shared";
+import {
+  APP_ROUTES,
+  CreatePostFormDataType,
+  postsService,
+  usePosts,
+} from "../../shared";
 
-const CreatePostPage = () => {
+interface ActionsPostPageProps {
+  isCreate?: boolean;
+}
+
+const ActionsPostPage: React.FC<ActionsPostPageProps> = ({
+  isCreate = false,
+}) => {
   const navigate = useNavigate();
+  const params = useParams();
+
+  const { data } = useQuery({
+    queryKey: ["post"],
+    queryFn: () => postsService.getPostById(Number(params.id)),
+    enabled: !!params.id || isCreate,
+  });
+
   const { register, handleSubmit, resetField } =
-    useForm<CreatePostFormDataType>();
-  const { createPost } = usePosts();
+    useForm<CreatePostFormDataType>({
+      defaultValues: {
+        content: data?.post?.content,
+        title: data?.post?.title,
+      },
+    });
+  const { createPost, updatePost } = usePosts();
 
   const onSubmit = handleSubmit((value) => {
     try {
-      createPost.mutate(value);
-      navigate(APP_ROUTES.home);
+      isCreate
+        ? createPost.mutate(value)
+        : updatePost.mutate({
+            ...value,
+            views: data?.post?.views as number,
+            id: data?.post?.id as number,
+          });
+      navigate(
+        isCreate ? APP_ROUTES.home : `${APP_ROUTES.posts}/${data?.post?.id}`
+      );
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +81,7 @@ const CreatePostPage = () => {
 
       <div className="flex gap-8 items-center justify-center mt-4">
         <button className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4">
-          Create
+          {isCreate ? "Create" : "Update"}
         </button>
 
         <button
@@ -61,4 +95,4 @@ const CreatePostPage = () => {
   );
 };
 
-export default CreatePostPage;
+export default React.memo(ActionsPostPage);

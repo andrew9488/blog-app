@@ -70,9 +70,13 @@ export class PostsRepository implements IPostsRepository {
 
   async getPopularPosts() {
     return this.prismaService.client.post.findMany({
+      take: 10,
       where: {
         views: {
           gte: 5,
+        },
+        createdAt: {
+          gte: new Date("2023-01-01T00:00:00+0200"),
         },
       },
       include: {

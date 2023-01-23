@@ -8,4 +8,7 @@ export enum TYPES {
   PostsRepository = "PostsRepository",
   PostsRouter = "PostsRouter",
   PostsController = "PostsController",
+  CommentsRepository = "CommentsRepository",
+  CommentsController = "CommentsController",
+  CommentsRouter = "CommentsRouter",
 }

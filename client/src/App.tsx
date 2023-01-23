@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 
 import { PrivateRoute } from "./components";
-import { CreatePostPage } from "./pages/create-post";
+import { ActionsPostPage } from "./pages/actions-post";
 import { HomePage } from "./pages/home";
 import { LoginPage } from "./pages/login";
 import { PostPage } from "./pages/post";
@@ -43,7 +43,11 @@ const App = () => {
                 />
                 <Route
                   path={`${APP_ROUTES.createPost}/*`}
-                  element={<CreatePostPage />}
+                  element={<ActionsPostPage isCreate />}
+                />
+                <Route
+                  path={`${APP_ROUTES.editPost}/*`}
+                  element={<ActionsPostPage />}
                 />
                 <Route
                   path={`${APP_ROUTES.post}/*`}

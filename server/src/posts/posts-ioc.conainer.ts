@@ -1,7 +1,6 @@
 import { ContainerModule, interfaces } from "inversify";
 
 import { TYPES } from "../shared/constants";
-import { IMiddleware } from "../shared/types";
 import { IPostsRepository, PostsRepository } from "./posts.repository";
 import { IPostsRouter, PostsRouter } from "./posts.router";
 import { IPostsController, PostsController } from "./posts.controller";

@@ -7,7 +7,7 @@ import {
 } from "react-icons/ai";
 import Moment from "react-moment";
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { APP_ROUTES, postsService, usePosts } from "../../shared";
 
@@ -86,9 +86,9 @@ const PostPage: React.FC<PostPageProps> = ({ userId = 0 }) => {
             {userId === data?.post.authorId && (
               <div className="flex gap-3 mt-4">
                 <button className="flex items-center justify-center gap-2 text-white opacity-50">
-                  {/* <Link to={`/${params.id}/edit`}> */}
-                  <AiTwotoneEdit />
-                  {/* </Link> */}
+                  <Link to={`${APP_ROUTES.posts}/edit-post/${params.id}`}>
+                    <AiTwotoneEdit />
+                  </Link>
                 </button>
                 <button
                   onClick={removePostHandler}

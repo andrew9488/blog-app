@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 import postsService from "./posts.service";
 
-const useUsersAuth = () => {
+const usePosts = () => {
   const queryClient = useQueryClient();
 
   const createPost = useMutation(postsService.createPost, {
@@ -13,7 +13,7 @@ const useUsersAuth = () => {
 
   const updatePost = useMutation(postsService.updatePost, {
     onSuccess() {
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["post"]);
     },
   });
 
@@ -30,4 +30,4 @@ const useUsersAuth = () => {
   };
 };
 
-export default useUsersAuth;
+export default usePosts;

@@ -37,7 +37,6 @@ export class PostsController implements IPostsController {
         content,
         title,
       });
-      // await this.usersRepository.update(req.userId, { ...newPost });
       res.status(201).json({ newPost });
     } catch (error) {
       this.httpError(res, error);

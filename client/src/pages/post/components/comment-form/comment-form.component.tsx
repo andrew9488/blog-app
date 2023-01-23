@@ -1,21 +1,23 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { APP_ROUTES } from "../../../../shared";
+import { useComments } from "../../../../shared";
 
 enum CommentFormFields {
   comment = "comment",
 }
 
 const CommentForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, resetField } = useForm<{ comment: string }>();
   const params = useParams();
-  const navigate = useNavigate();
+
+  const { createComment } = useComments();
 
   const onSubmit = handleSubmit((value) => {
     try {
       const postId = params.id;
-      navigate(APP_ROUTES.home);
+      createComment.mutate({ content: value.comment, postId: Number(postId) });
+      resetField(CommentFormFields.comment);
     } catch (error) {
       console.log(error);
     }
